@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es6",     //default is es5
-    "module": "commonjs",//CommonJs style module in output
-    "outDir": "dist"  ,   //change the output directory
-    "resolveJsonModule": true //to import out json database
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "dist"  ,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
-    "src/**/*.ts"       //which kind of files to compile
+    "src/**/*.ts"
   ],
   "exclude": [
-    "node_modules"     //which files or directories to ignore
+    "node_modules"
   ]
 }

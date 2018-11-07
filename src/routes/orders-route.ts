@@ -1,27 +1,27 @@
 import {Request, Response} from "express";
 import * as express from "express";
 import {OrderModel} from "../models/order.model";
+import * as HttpStatus from 'http-status-codes';
+import {RestService} from "../services/rest.service";
+import {CustomerModel} from "../models/customer.model";
+import {CustomerCallback} from "../shared/callbacks/customer-callback";
+import {OrderCallback} from "../shared/callbacks/order-callback";
 
-/**
- * Route for managing orders
- *
- */
 export class OrdersRoute {
-
-    private m_orders: Array<OrderModel> = new Array();
-
     public routes(app: express.Application): void {
         app.route('/placeorder')
             .post((req: Request, res: Response) => {
-                let orderToAdd: OrderModel = OrderModel.fromJson(req.body);
 
-                // Check if the order is valid and add it, otherwise- send an error with the expected order template
-                if (orderToAdd.isValid()){
-                    this.m_orders.push(orderToAdd);
-                    console.log(this.m_orders.length);
-                    res.status(200).send();
+                // Create new customer from request body
+                let customerToAdd: CustomerModel = new CustomerModel();
+                customerToAdd.fromJson(req.body);
+
+                // If the customer is valid- request to add it, otherwise- send an error with the expected template
+                if (customerToAdd.isValid()){
+                    RestService.createCostumer(customerToAdd, new CustomerCallback(new OrderCallback(res), res));
+                    res.status(HttpStatus.OK).send();
                 } else{
-                    res.status(400).send(OrderModel.TEMPLATE);
+                    res.status(HttpStatus.BAD_REQUEST).send(OrderModel.TEMPLATE);
                 }
          })
     }

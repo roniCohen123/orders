@@ -1,7 +1,6 @@
 import {OrdersApp} from "./orders-app";
+import {Properties as Prop} from "./shared/properties";
 
-const PORT = 3001;
-
-OrdersApp.getInstance().app.listen(PORT, () => {
-    console.log('listening on port ' + PORT);
+OrdersApp.getInstance().app.listen(Prop.PORT, () => {
+    console.log('listening on port ' + Prop.PORT);
 })

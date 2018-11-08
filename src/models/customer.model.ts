@@ -6,12 +6,18 @@ export class CustomerModel extends AbstractJsonModel{
     protected m_cellNumber: String;
     protected m_address: String;
 
+    // Expected template
+    public static readonly TEMPLATE: String =
+        `Expected template: {name(length:${Prop.MIN_NAME_LEN}-${Prop.MAX_NAME_LEN}),`+
+        `cellNumber(max length:${Prop.CELL_NUMBER_LEN}, only numbers),`+
+        `address(length:${Prop.MIN_ADDRESS_LEN}-${Prop.MAX_ADDRESS_LEN})}`;
+
     constructor(){
         super();
     }
 
     public toJson(): string{
-        return `{"name":"${this.name}","address":"${this.address}","cellNumber":"${this.cellNumber}"}`;
+        return `{"name":"${this.name}","address":"${this.address}","phone":"${this.cellNumber}"}`;
     }
 
     public fromJson(json: any): void{

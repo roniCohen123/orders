@@ -27,9 +27,7 @@ export class OrdersApp {
         this.m_app.use(bodyParser.json());
 
         // Support application form-urlencoded post data
-        this.m_app.use(bodyParser.urlencoded({
-            extended: false
-        }));
+        this.m_app.use(bodyParser.urlencoded({extended: false}));
     }
 
     public get app() : express.Application{

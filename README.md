@@ -1,5 +1,7 @@
 # orders
 
+after clone the code, run "npm install" and then "npm run dev"
+
 #Input validation:
 name - (2-50 letters),
 cell number - (exactly 10 digits (as a string), when calling get orders- add +1 at the beginning),

@@ -14,12 +14,15 @@ export class PageModel extends AbstractJsonModel {
         // Does nothing
     }
 
+    public nextPage(): void{
+        this.page++;
+    }
 
-    get pageNumber(): number {
+    get page(): number {
         return this._pageNumber;
     }
 
-    set pageNumber(value: number) {
+    set page(value: number) {
         this._pageNumber = value;
     }
 }

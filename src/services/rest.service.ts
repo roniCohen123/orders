@@ -4,6 +4,7 @@ import {CustomerModel} from "../models/customer.model";
 import {AbstractJsonModel} from "../models/abstract-json.model";
 import {RestCallback} from "../shared/callbacks/rest-callback.interface";
 import {EncodeService} from "./encode.service";
+import {PageModel} from "../models/page.model";
 let CryptoJS = require("crypto-js");
 let request = require('request');
 
@@ -17,8 +18,8 @@ export class RestService{
         this.sendRest(Prop.CUSTOMERS_URL, callback, "POST", customer);
     }
 
-    public static getOrders(callback: RestCallback){
-        this.sendRest(Prop.ORDERS_URL, callback, "GET");
+    public static getOrders(page: PageModel, callback: RestCallback){
+        this.sendRest(Prop.ORDERS_URL, callback, "GET", page);
     }
 
     private static sendRest(url: string, callback: RestCallback, method: string, data?: AbstractJsonModel): void{

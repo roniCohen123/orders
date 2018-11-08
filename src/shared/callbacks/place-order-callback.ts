@@ -12,7 +12,6 @@ export class PlaceOrderCallback implements RestCallback{
 
     onResponse(error, response, body): void{
         if (!error && response.statusCode == HttpStatus.OK) {
-            console.log(body);
             this._response.status(HttpStatus.OK).send();
         } else{
             this._response.status(HttpStatus.INTERNAL_SERVER_ERROR).send();

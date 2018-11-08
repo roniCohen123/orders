@@ -1,27 +1,49 @@
 import {RestCallback} from "./rest-callback.interface";
 import * as HttpStatus from "http-status-codes";
 import {Response} from "express";
+import {RestService} from "../../services/rest.service";
+import {PageModel} from "../../models/page.model";
 
+
+/**
+ * Callback class for getOrders request
+ * Each response is fore specific page
+ * keep sending requests until there are no pages
+ * (maybe it can be stopped after the order is too old but wasn't sure if the tasks are sorted)
+ *
+ */
 export class GetOrdersCallback implements RestCallback{
-    // The date of last week- update whenever get response
-    private _lastWeekDate: Date;
+    private readonly _lastWeekDate: Date;
+    private _currentPage: PageModel = new PageModel(1);
 
-    constructor(protected _phone: string, protected _response: Response){}
+    // The orders that pass the filter and eventually will be sent back as a response
+    private _filteredOrders: Array<any> = new Array();
+
+    constructor(protected _phone: string, protected _response: Response){
+        // Set the date of last week
+        this._lastWeekDate = new Date();
+        this._lastWeekDate.setDate(this._lastWeekDate.getDate()-7);
+    }
 
     onResponse(error, response, body): void{
         if (!error && response.statusCode == HttpStatus.OK) {
+
             let orders = JSON.parse(body);
 
             // Check if the body is a valid array and filter by cell number field and time
             if (Array.isArray(orders)){
+                // If this is last page (no more orders) - return all the filtered orders
+                if (orders.length == 0){
+                    this._response.status(HttpStatus.OK).send(JSON.stringify(this._filteredOrders));
+                } else{
+                    // Add all the orders that pass the filter
+                    let currFiltered: Array<any> = orders.filter(order => this.isPassFilter(order));
+                    this._filteredOrders = this._filteredOrders.concat(currFiltered);
 
-                // Update the date of last week once, before running filter on the orders receive
-                this._lastWeekDate = new Date();
-                this._lastWeekDate.setDate(this._lastWeekDate.getDate()-7);
-
-                // Return only the orders that pass the filter
-                let filterOrders = orders.filter((order => this.isPassFilter(order)));
-                this._response.status(HttpStatus.OK).send(JSON.stringify(filterOrders));
+                    // Request next page
+                    this._currentPage.nextPage();
+                    RestService.getOrders(this._currentPage, this);
+                }
             } else{
                 this._response.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
             }
@@ -31,7 +53,7 @@ export class GetOrdersCallback implements RestCallback{
     }
 
     /**
-     * Check if on order pass the phone and the date filters
+     * Check if the order pass the phone and the date filters
      *
      */
     protected isPassFilter(order: any) : boolean{

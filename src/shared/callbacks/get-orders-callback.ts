@@ -25,6 +25,10 @@ export class GetOrdersCallback implements RestCallback{
         this._lastWeekDate.setDate(this._lastWeekDate.getDate()-7);
     }
 
+    /**
+     * Handle response for get order request on specific page
+     *
+     */
     onResponse(error, response, body): void{
         if (!error && response.statusCode == HttpStatus.OK) {
 
@@ -53,7 +57,7 @@ export class GetOrdersCallback implements RestCallback{
     }
 
     /**
-     * Check if the order pass the phone and the date filters
+     * Check if the order pass the filters
      *
      */
     protected isPassFilter(order: any) : boolean{
@@ -64,7 +68,7 @@ export class GetOrdersCallback implements RestCallback{
             passFilter = order.customer.phone == this._phone;
         }
 
-        // If pass phone filter, check if this order is from last week
+        // If order passed phone filter, check if this order is from last week
         if (passFilter && order.created_at){
             let orderDate: Date = new Date(order.created_at);
             passFilter = (orderDate > this._lastWeekDate);

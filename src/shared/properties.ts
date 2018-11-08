@@ -6,6 +6,7 @@ export class Properties {
     // Parameter validation
     public static readonly MAX_NAME_LEN: number = 50;
     public static readonly MIN_NAME_LEN: number = 2;
+    public static readonly MAX_PHONE_LEN: number = 10;
     public static readonly CELL_NUMBER_LEN: number = 10;
     public static readonly MAX_ADDRESS_LEN: number = 100;
     public static readonly MIN_ADDRESS_LEN: number = 5;

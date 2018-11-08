@@ -2,6 +2,10 @@ import {RestCallback} from "./rest-callback.interface";
 import * as HttpStatus from "http-status-codes";
 import {Response} from "express";
 
+/**
+ * Callback for create order request
+ *
+ */
 export class PlaceOrderCallback implements RestCallback{
 
     protected _response: Response;

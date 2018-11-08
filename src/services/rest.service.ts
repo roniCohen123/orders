@@ -8,6 +8,10 @@ import {PageModel} from "../models/page.model";
 let CryptoJS = require("crypto-js");
 let request = require('request');
 
+/**
+ * Service for sending REST requests
+ *
+ */
 export class RestService{
 
     public static createOrder(order: OrderModel, callback: RestCallback){
@@ -22,7 +26,15 @@ export class RestService{
         this.sendRest(Prop.ORDERS_URL, callback, "GET", page);
     }
 
-    private static sendRest(url: string, callback: RestCallback, method: string, data?: AbstractJsonModel): void{
+    /**
+     * Send a rest request
+     *
+     * @param url
+     * @param callback - a RestCallback to handle the response
+     * @param method - POST/GET...
+     * @param data - an AbstractJsonModel to send if it's relevant to the request
+     */
+    protected static sendRest(url: string, callback: RestCallback, method: string, data?: AbstractJsonModel): void{
         // Create query body from data and extra parameters for signature
         let params = data ? JSON.parse(data.toJson()) : {};
         params.timestamp = Date.now();

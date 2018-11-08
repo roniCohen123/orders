@@ -9,8 +9,16 @@ import {OrderModel} from "../models/order.model";
 import {GetOrdersCallback} from "../shared/callbacks/get-orders-callback";
 import {PageModel} from "../models/page.model";
 
+/**
+ * Create all the routs for REST API
+ *
+ */
 export class OrdersRoute {
     public routes(app: express.Application): void {
+
+        /**
+         * Creates a new customer and order
+         */
         app.route('/placeorder')
             .post((req: Request, res: Response) => {
                 if (req.body){
@@ -36,6 +44,9 @@ export class OrdersRoute {
                 }
          });
 
+        /**
+         * Get all orders of the customer from last week, according to it's cell number
+         */
         app.route('/getorders')
             .get((req: Request, res: Response) => {
                 if (req.body){

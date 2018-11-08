@@ -1,6 +1,10 @@
 import {Properties as Prop} from "../shared/properties";
 import {AbstractJsonModel} from "./abstract-json.model";
 
+/**
+ * An Order model which can be converted to/from json
+ *
+ */
 export class OrderModel extends AbstractJsonModel{
     protected _title: String;
     private _customerId: number;

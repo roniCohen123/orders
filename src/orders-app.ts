@@ -2,6 +2,10 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import {OrdersRoute} from "./routes/orders-route";
 
+/**
+ * Main class which holds the instance of express in order to define routes for REST api
+ *
+ */
 export class OrdersApp {
 
     private static m_instance;

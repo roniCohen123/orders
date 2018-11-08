@@ -1,6 +1,9 @@
-import {Properties as Prop} from "../shared/properties";
 import {AbstractJsonModel} from "./abstract-json.model";
 
+/**
+ * A page model which can be converted to/from json
+ *
+ */
 export class PageModel extends AbstractJsonModel {
     constructor(private _pageNumber: number) {
         super();
@@ -11,7 +14,7 @@ export class PageModel extends AbstractJsonModel {
     }
 
     public fromJson(json: any): void {
-        // Does nothing
+        this.page = json.page;
     }
 
     public nextPage(): void{

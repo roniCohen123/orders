@@ -4,6 +4,10 @@ import {RestService} from "../../services/rest.service";
 import {PlaceOrderCallback} from "./place-order-callback";
 import {OrderModel} from "../../models/order.model";
 
+/**
+ * Callback for create customer request
+ *
+ */
 export class AddCustomerCallback implements RestCallback{
     protected _orderCallback : PlaceOrderCallback;
     protected _order: OrderModel;
@@ -13,6 +17,10 @@ export class AddCustomerCallback implements RestCallback{
         this._order = order;
     }
 
+    /**
+     * Handle response from create customer request
+     *
+     */
     onResponse(error, response, body): void{
         if (!error && response.statusCode == HttpStatus.OK) {
             this._order.fromJson(JSON.parse(body));

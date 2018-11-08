@@ -1,6 +1,10 @@
 import {Properties as Prop} from "../shared/properties";
 import {AbstractJsonModel} from "./abstract-json.model";
 
+/**
+ * A costumer model which can be converted to/from json
+ *
+ */
 export class CustomerModel extends AbstractJsonModel{
     protected m_name: String;
     protected m_cellNumber: String;
@@ -9,7 +13,7 @@ export class CustomerModel extends AbstractJsonModel{
     // Expected template
     public static readonly TEMPLATE: String =
         `Expected template: {name(length:${Prop.MIN_NAME_LEN}-${Prop.MAX_NAME_LEN}),`+
-        `cellNumber(max length:${Prop.CELL_NUMBER_LEN}, only numbers),`+
+        `cellNumber(length:${Prop.MAX_PHONE_LEN}, only numbers),`+
         `address(length:${Prop.MIN_ADDRESS_LEN}-${Prop.MAX_ADDRESS_LEN})}`;
 
     constructor(){
@@ -46,7 +50,7 @@ export class CustomerModel extends AbstractJsonModel{
 
     public set cellNumber(cellNumber: String) {
         if ((cellNumber) && (cellNumber.match("[0-9]+")) &&
-            (cellNumber.length == Prop.CELL_NUMBER_LEN)) {
+            (cellNumber.length == Prop.MAX_PHONE_LEN)) {
             this.m_cellNumber = cellNumber;
         }
     }
